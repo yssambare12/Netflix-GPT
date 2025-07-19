@@ -1,11 +1,36 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "./Header";
+import checkValidData from "../utils/validate";
 
 const Login = () => {
   const [isSigninform, setIsSignInform] = useState(true);
+  const [errorMassage, seterrorMassage] = useState();
+
+  const email = useRef();
+  const password = useRef();
+  const name = useRef();
 
   const toggleSignInForm = () => {
     setIsSignInform(!isSigninform);
+  };
+
+  const handlebuttonClick = () => {
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    let nameValue = null;
+    if (!isSigninform) {
+      nameValue = name.current.value;
+      console.log(nameValue);
+    }
+
+    const massage = checkValidData(
+      email.current.value,
+      password.current.value,
+      nameValue
+    );
+    console.log(massage);
+    seterrorMassage(massage);
   };
 
   return (
@@ -20,12 +45,16 @@ const Login = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      <form className="absolute w-3/12 p-12 bg-black my-36 mx-auto right-0 left-0 bg-opacity-80 text-white z-10 rounded-md flex flex-col">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="absolute w-3/12 p-12 bg-black my-36 mx-auto right-0 left-0 bg-opacity-80 text-white z-10 rounded-md flex flex-col"
+      >
         <h1 className="font-bold text-3xl py-4">
           {isSigninform ? "Sign in" : "Sign Up"}
         </h1>
         {!isSigninform && (
           <input
+            ref={name}
             type="text"
             placeholder="Name"
             className="p-4 my-4 w-full bg-gray-900"
@@ -33,21 +62,27 @@ const Login = () => {
         )}
         <input
           type="text"
+          ref={email}
           placeholder="Email"
           className="p-4 my-4 w-full bg-gray-900"
         />
         <input
           type="text"
+          ref={password}
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-900"
         />
-        <button className="p-4 my-4 bg-red-700 w-full rounded-lg">
+        <p className="text-red-600 font-bold">{errorMassage}</p>
+        <button
+          onClick={handlebuttonClick}
+          className="p-4 my-4 bg-red-700 w-full rounded-lg"
+        >
           {isSigninform ? "Sign in" : "Sign Up"}
         </button>
         <p onClick={toggleSignInForm} className="py-4 cursor-pointer">
           {isSigninform
-            ? "New to Netflix? Sign Up now"
-            : "Already A user Sign In now"}
+            ? "New to Netflix ? Sign Up now."
+            : "Already A user ? Sign In now."}
         </p>
       </form>
     </div>
