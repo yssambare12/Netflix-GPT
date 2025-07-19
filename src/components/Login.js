@@ -13,7 +13,6 @@ const Login = () => {
 
   const email = useRef();
   const password = useRef();
-  const name = useRef();
 
   const toggleSignInForm = () => {
     setIsSignInform(!isSigninform);
@@ -22,11 +21,6 @@ const Login = () => {
   const handlebuttonClick = () => {
     console.log(email.current.value);
     console.log(password.current.value);
-
-    // let nameValue = null;
-    // if (!isSigninform) {
-    //   nameValue = name.current.value;
-    // }
 
     const massage = checkValidData(
       email.current.value,
@@ -46,13 +40,13 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
+          // console.log(errorCode);
+          // console.log(errorMessage);
           seterrorMassage(error + "-" + errorMassage);
         });
     } else {
