@@ -21,7 +21,6 @@ const Login = () => {
     let nameValue = null;
     if (!isSigninform) {
       nameValue = name.current.value;
-      console.log(nameValue);
     }
 
     const massage = checkValidData(
@@ -29,7 +28,6 @@ const Login = () => {
       password.current.value,
       nameValue
     );
-    console.log(massage);
     seterrorMassage(massage);
   };
 
