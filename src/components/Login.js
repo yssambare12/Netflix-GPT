@@ -1,6 +1,11 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import checkValidData from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSigninform, setIsSignInform] = useState(true);
@@ -18,17 +23,56 @@ const Login = () => {
     console.log(email.current.value);
     console.log(password.current.value);
 
-    let nameValue = null;
-    if (!isSigninform) {
-      nameValue = name.current.value;
-    }
+    // let nameValue = null;
+    // if (!isSigninform) {
+    //   nameValue = name.current.value;
+    // }
 
     const massage = checkValidData(
       email.current.value,
-      password.current.value,
-      nameValue
+      password.current.value
+      // nameValue
     );
     seterrorMassage(massage);
+
+    if (massage) return;
+    if (!isSigninform) {
+      //sign up login
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          seterrorMassage(error + "-" + errorMassage);
+        });
+    } else {
+      // sign in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrorMassage(errorCode + "-" + errorMassage);
+        });
+    }
   };
 
   return (
@@ -52,7 +96,7 @@ const Login = () => {
         </h1>
         {!isSigninform && (
           <input
-            ref={name}
+            // ref={name}
             type="text"
             placeholder="Name"
             className="p-4 my-4 w-full bg-gray-900"
