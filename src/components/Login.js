@@ -4,17 +4,19 @@ import checkValidData from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [isSigninform, setIsSignInform] = useState(true);
   const [errorMassage, seterrorMassage] = useState();
 
   const email = useRef();
   const password = useRef();
+  const name = useRef();
 
   const toggleSignInForm = () => {
     setIsSignInform(!isSigninform);
@@ -42,7 +44,17 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          Navigate("/browse");
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/91533131?v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              navigate("/browse");
+            })
+            .catch((error) => {
+              seterrorMassage(error.massage);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -60,7 +72,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user);
-          Navigate("/browse");
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -91,7 +103,7 @@ const Login = () => {
         </h1>
         {!isSigninform && (
           <input
-            // ref={name}
+            ref={name}
             type="text"
             placeholder="Name"
             className="p-4 my-4 w-full bg-gray-900"

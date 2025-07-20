@@ -25,8 +25,15 @@ const Body = () => {
       if (user) {
         console.log(user);
         // User is signed in
-        const { uid, email, displayName } = user.uid;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        const { uid, email, displayName, photoURL } = user.uid;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
       } else {
         // User is signed out
         dispatch(removeUser());
