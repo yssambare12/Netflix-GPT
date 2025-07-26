@@ -25,7 +25,7 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
+        // console.log(user);
         // User is signed in
         const { uid, email, displayName, photoURL } = user.uid;
         dispatch(

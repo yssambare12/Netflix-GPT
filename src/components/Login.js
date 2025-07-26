@@ -21,8 +21,8 @@ const Login = () => {
   };
 
   const handlebuttonClick = () => {
-    console.log(email.current.value);
-    console.log(password.current.value);
+    // console.log(email.current.value);
+    // console.log(password.current.value);
 
     const massage = checkValidData(
       email.current.value,
