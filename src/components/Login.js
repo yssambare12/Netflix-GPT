@@ -7,10 +7,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [isSigninform, setIsSignInform] = useState(true);
   const [errorMassage, seterrorMassage] = useState();
 
@@ -50,7 +48,6 @@ const Login = () => {
           })
             .then(() => {
               // Profile updated!
-              navigate("/browse");
             })
             .catch((error) => {
               seterrorMassage(error.massage);
@@ -71,8 +68,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
