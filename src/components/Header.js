@@ -53,13 +53,7 @@ const Header = () => {
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
         <div className="flex items-center space-x-4">
-          <img
-            alt="userprofile"
-            className="rounded-full border border-gray-400"
-            width={45}
-            height={45}
-            src={UserAvatar}
-          />
+          <img alt="userprofile" width={45} height={45} src={UserAvatar} />
           <span className="text-white font-semibold">{user?.displayName}</span>
           <button
             onClick={handleSignout}
