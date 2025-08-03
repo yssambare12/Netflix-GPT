@@ -3,9 +3,21 @@ import MovieList from "./MovieList";
 
 const SecondaryContainer = () => {
   const moviesData = useSelector((store) => store.movies);
+  console.log(moviesData);
   return (
-    <div className="">
-      <MovieList title={"Now Playing"} movies={moviesData.nowplayingmovies} />
+    <div className=" bg-black">
+      <div className="-mt-28 pl-12 relative z-20">
+        <MovieList title={"Now Playing"} movies={moviesData.nowplayingmovies} />
+        <MovieList
+          title={"Popular Movies"}
+          movies={moviesData.nowplayingmovies}
+        />
+        <MovieList
+          title={"Tranding Movies"}
+          movies={moviesData.nowplayingmovies}
+        />
+        <MovieList title={"New Movies"} movies={moviesData.nowplayingmovies} />
+      </div>
     </div>
   );
 };
