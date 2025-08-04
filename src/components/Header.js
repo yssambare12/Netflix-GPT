@@ -6,6 +6,8 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { LOGO, UserAvatar } from "../utils/constants";
+import { Link } from "react-router-dom";
+import { toggleGptSearchVode } from "../utils/gptSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -48,11 +50,21 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchVode());
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex items-center justify-between">
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
         <div className="flex items-center space-x-4">
+          <button
+            onClick={handleGptSearchClick}
+            className="py-2 px-4 m-2 bg-purple-800 text-white rounded"
+          >
+            GPT Search
+          </button>
           <img alt="userprofile" width={45} height={45} src={UserAvatar} />
           <span className="text-white font-semibold">{user?.displayName}</span>
           <button
