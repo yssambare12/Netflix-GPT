@@ -1,7 +1,7 @@
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
-  console.log(movies);
+  // console.log(movies);
 
   if (!movies || movies.length === 0) {
     return <div>No movies found.</div>;
