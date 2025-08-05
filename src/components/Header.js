@@ -5,9 +5,9 @@ import { auth } from "../utils/firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { LOGO, UserAvatar } from "../utils/constants";
-import { Link } from "react-router-dom";
+import { LOGO, UserAvatar, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchVode } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -56,11 +56,27 @@ const Header = () => {
     dispatch(toggleGptSearchVode());
   };
 
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex items-center justify-between">
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
         <div className="flex items-center space-x-4">
+          {showGptSearch && (
+            <select
+              className="p-2 m-2 bg-gray-900 text-white"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             onClick={handleGptSearchClick}
             className="py-2 px-4 m-2 bg-purple-800 text-white rounded"
