@@ -13,6 +13,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const showGptSearch = useSelector((store) => store.gpt.showgptSearch);
+
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
@@ -63,7 +65,7 @@ const Header = () => {
             onClick={handleGptSearchClick}
             className="py-2 px-4 m-2 bg-purple-800 text-white rounded"
           >
-            GPT Search
+            {showGptSearch ? "Homepage" : "Gpt Search"}
           </button>
           <img alt="userprofile" width={45} height={45} src={UserAvatar} />
           <span className="text-white font-semibold">{user?.displayName}</span>
