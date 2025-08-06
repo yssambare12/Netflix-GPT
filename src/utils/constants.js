@@ -24,4 +24,4 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
 
-export const GITHUB_AI_TOKEN = "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";
+export const GITHUB_AI_TOKEN = "token";
