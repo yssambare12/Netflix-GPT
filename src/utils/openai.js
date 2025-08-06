@@ -1,9 +1,9 @@
 import OpenAI from "openai";
-import { OPENAI_KEY } from "./constants";
+import { GITHUB_AI_TOKEN } from "./constants";
 
-const openai = new OpenAI({
-  apiKey: OPENAI_KEY, // This is the default and can be omitted
-  dangerouslyAllowBrowser: true,
-});
+const token = GITHUB_AI_TOKEN;
+const endpoint = "https://models.github.ai/inference";
+
+const openai = new OpenAI({ baseURL: endpoint, apiKey: token, dangerouslyAllowBrowser: true });
 
 export default openai;

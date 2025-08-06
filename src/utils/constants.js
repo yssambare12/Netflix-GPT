@@ -24,5 +24,4 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
 
-export const OPENAI_KEY =
-  "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";
+export const GITHUB_AI_TOKEN = "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";
