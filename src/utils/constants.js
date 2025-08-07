@@ -24,4 +24,4 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
 
-export const GITHUB_AI_TOKEN = "token";
+export const GITHUB_AI_TOKEN = process.env.REACT_APP_GITHUB_AI_TOKEN;

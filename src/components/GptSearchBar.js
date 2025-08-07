@@ -1,12 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import lang from "../utils/languageConstants";
 import { useRef } from "react";
 import openai from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchtext = useRef(null);
+
+  const dispatch = useDispatch();
 
   const searchMovieTmdb = async (movie) => {
     const data = await fetch(
@@ -18,15 +21,12 @@ const GptSearchBar = () => {
 
     return json;
 
-    console.log(json);
+    // console.log(json);
   };
 
   const handlegptsearch = async () => {
-    console.log(searchtext.current.value);
+    // console.log(searchtext.current.value);
 
-    const queryPrompt = `Act as a movie recommendation system. Suggest 5 movie names for the query: "${searchtext.current.value}". Do not add any explanation—just list the 5 movie names only.`;
-
-    // need to solve limit issue for api
     const gptResult = await openai.chat.completions.create({
       messages: [
         { role: "system", content: "" },
@@ -43,8 +43,14 @@ const GptSearchBar = () => {
     // const gptMovieList = gptResult.output_text?.choices[0]?.message?.content;
     // console.log(gptMovieList);
 
-    console.log(gptResult);
-    const gptMovieList = gptResult.choices?.[0]?.message?.content.split(",");
+    // console.log(gptResult);
+    const rawText = gptResult.choices?.[0]?.message?.content;
+
+    const gptMovieList = rawText
+      .split("\n")
+      .map((line) => line.replace(/^\d+\.\s*/, "").trim())
+      .filter((line) => line);
+
     console.log(gptMovieList);
 
     const promoseArray = gptMovieList.map((movie) => searchMovieTmdb(movie));
@@ -52,6 +58,13 @@ const GptSearchBar = () => {
     const tmdbResult = await Promise.all(promoseArray);
 
     console.log(tmdbResult);
+
+    dispatch(
+      addGptMovieResult({
+        movieName: gptMovieList,
+        movieSearchResult: tmdbResult,
+      })
+    );
   };
   return (
     <div className="pt-[10%] flex justify-center">
