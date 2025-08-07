@@ -51,13 +51,13 @@ const GptSearchBar = () => {
       .map((line) => line.replace(/^\d+\.\s*/, "").trim())
       .filter((line) => line);
 
-    console.log(gptMovieList);
+    // console.log(gptMovieList);
 
     const promoseArray = gptMovieList.map((movie) => searchMovieTmdb(movie));
 
     const tmdbResult = await Promise.all(promoseArray);
 
-    console.log(tmdbResult);
+    // console.log(tmdbResult);
 
     dispatch(
       addGptMovieResult({
