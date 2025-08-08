@@ -21,6 +21,8 @@ const GptSearchBar = () => {
 
     return json;
 
+    console.log("tmdb movie ++" + json);
+
     // console.log(json);
   };
 
