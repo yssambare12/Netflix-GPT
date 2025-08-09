@@ -1,60 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import lang from "../utils/languageConstants";
 import { useRef } from "react";
-import openai from "../utils/openai";
-import { API_OPTIONS } from "../utils/constants";
-import { addGptMovieResult } from "../utils/gptSlice";
-import useSearchMovieTmdb from "../hooks/useSearchMovieTmdb";
+import useHandleGptSearch from "../hooks/useHandlegptSearch";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchtext = useRef(null);
 
-  const dispatch = useDispatch();
-  const searchMovieTmdb = useSearchMovieTmdb();
+  const handleGptSearch = useHandleGptSearch();
 
   const handlegptsearch = async () => {
-    // console.log(searchtext.current.value);
-
-    const gptResult = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: "" },
-        {
-          role: "user",
-          content: `Act as a movie recommendation system. Suggest 5 movie names for the query: "${searchtext.current.value}". Do not add any explanation—just list the 5 movie names only.`,
-        },
-      ],
-      model: "openai/gpt-4.1",
-    });
-
-    // console.log(gptResult.output_text);
-
-    // const gptMovieList = gptResult.output_text?.choices[0]?.message?.content;
-    // console.log(gptMovieList);
-
-    // console.log(gptResult);
-    const rawText = gptResult.choices?.[0]?.message?.content;
-
-    const gptMovieList = rawText
-      .split("\n")
-      .map((line) => line.replace(/^\d+\.\s*/, "").trim())
-      .filter((line) => line);
-
-    // console.log(gptMovieList);
-
-    const promoseArray = gptMovieList.map((movie) => searchMovieTmdb(movie));
-
-    const tmdbResult = await Promise.all(promoseArray);
-
-    // console.log(tmdbResult);
-
-    dispatch(
-      addGptMovieResult({
-        movieName: gptMovieList,
-        movieSearchResult: tmdbResult,
-      })
-    );
+    const searchQuery = searchtext.current.value;
+    await handleGptSearch(searchQuery);
   };
+
   return (
     <div className="pt-[10%] flex justify-center">
       <form
