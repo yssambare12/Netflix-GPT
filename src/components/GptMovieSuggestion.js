@@ -38,7 +38,6 @@ const GptMovieSuggestion = () => {
   }
 
   if (!Array.isArray(movieName)) {
-    console.log("movieName is not an array, returning null");
     return null;
   }
 

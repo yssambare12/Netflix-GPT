@@ -24,16 +24,13 @@ const MovieCard = ({
   const handleClick = () => {
     if (movieData) {
       // Open trailer overlay with complete movie data
-      console.log("Opening modal with movie data:", movieData);
       try {
         dispatch(openMovieModal(movieData));
-        console.log("Action dispatched successfully");
       } catch (error) {
-        console.error("Error dispatching action:", error);
+        // Action dispatch failed silently
       }
     } else if (onClick && movieId) {
       // Fallback to original onClick behavior
-      console.log("Using fallback onClick with movieId:", movieId);
       onClick(movieId);
     }
   };

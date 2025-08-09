@@ -35,7 +35,6 @@ const useMovieTrailerModal = () => {
           trailers[0] ||
           data.results[0];
 
-        console.log("Fetched trailer data:", selectedTrailer); // Debug log
         dispatch(setMovieTrailer(selectedTrailer));
       } catch (error) {
         console.error("Error fetching movie trailer:", error);

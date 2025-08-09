@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeMovieModal } from "../utils/movieModalSlice";
 import useMovieTrailerModal from "../hooks/useMovieTrailerModal";
@@ -7,24 +7,26 @@ import { ImageCDN } from "../utils/constants";
 const MovieTrailerOverlay = () => {
   const dispatch = useDispatch();
   const { fetchMovieTrailer } = useMovieTrailerModal();
+  const iframeRef = useRef(null);
 
   const { isOpen, selectedMovie, selectedMovieTrailer, isLoading } =
     useSelector((store) => store.movieModal);
 
-  // Debug logging
-  console.log("Modal State:", {
-    isOpen,
-    selectedMovie,
-    selectedMovieTrailer,
-    isLoading,
-  });
-
   useEffect(() => {
     if (isOpen && selectedMovie?.id) {
-      console.log("Opening modal for movie:", selectedMovie.id); // Debug log
       fetchMovieTrailer(selectedMovie.id);
     }
   }, [isOpen, selectedMovie?.id, fetchMovieTrailer]);
+
+  // Cleanup effect to pause video when modal closes
+  useEffect(() => {
+    return () => {
+      // This runs when component unmounts or modal closes
+      if (iframeRef.current) {
+        pauseVideo();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleEscKey = (event) => {
@@ -44,7 +46,25 @@ const MovieTrailerOverlay = () => {
     };
   }, [isOpen]);
 
+  const pauseVideo = () => {
+    if (iframeRef.current) {
+      try {
+        // Try to pause the video using YouTube iframe API
+        const iframe = iframeRef.current;
+        if (iframe.contentWindow && iframe.contentWindow.postMessage) {
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ event: "command", func: "pauseVideo" }),
+            "*"
+          );
+        }
+      } catch (error) {
+        // Video pause failed silently
+      }
+    }
+  };
+
   const handleClose = () => {
+    pauseVideo(); // Pause video before closing
     dispatch(closeMovieModal());
   };
 
@@ -54,9 +74,7 @@ const MovieTrailerOverlay = () => {
     }
   };
 
-  // Debug: Always show modal for testing
   if (!isOpen || !selectedMovie) {
-    console.log("Modal not showing:", { isOpen, selectedMovie });
     return null;
   }
 
@@ -107,15 +125,16 @@ const MovieTrailerOverlay = () => {
                   Trailer Key: {selectedMovieTrailer.key}
                 </div>
                 <iframe
+                  ref={iframeRef}
                   className="w-full aspect-video"
-                  src={`https://www.youtube.com/embed/${selectedMovieTrailer.key}?autoplay=1&rel=0&modestbranding=1&mute=1&enablejsapi=1&origin=${window.location.origin}`}
+                  src={`https://www.youtube.com/embed/${selectedMovieTrailer.key}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1&origin=${window.location.origin}`}
                   title={`${
                     selectedMovie.title || selectedMovie.original_title
                   } Trailer`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  onError={() => console.log("Iframe failed to load")}
+                  onError={() => {}}
                 />
                 {/* Fallback link in case iframe doesn't work */}
                 <div className="absolute bottom-2 left-2 z-10">
