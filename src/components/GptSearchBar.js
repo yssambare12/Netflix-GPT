@@ -4,27 +4,14 @@ import { useRef } from "react";
 import openai from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
+import useSearchMovieTmdb from "../hooks/useSearchMovieTmdb";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchtext = useRef(null);
 
   const dispatch = useDispatch();
-
-  const searchMovieTmdb = async (movie) => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS
-    );
-
-    const json = await data.json();
-
-    return json;
-
-    console.log("tmdb movie ++" + json);
-
-    // console.log(json);
-  };
+  const searchMovieTmdb = useSearchMovieTmdb();
 
   const handlegptsearch = async () => {
     // console.log(searchtext.current.value);
