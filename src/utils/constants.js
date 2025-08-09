@@ -1,5 +1,4 @@
-export const LOGO =
-  "https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-07-01/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
+// export const LOGO =
 
 export const UserAvatar =
   "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg";
@@ -16,12 +15,12 @@ export const API_OPTIONS = {
 export const ImageCDN = "https://image.tmdb.org/t/p/w780/";
 
 export const BGImage =
-  "https://assets.nflxext.com/ffe/siteui/vlv3/7d2359a4-434f-4efa-9ff3-e9d38a8bde7f/web/IN-en-20250707-TRIFECTA-perspective_4faa9280-a2c5-4e07-aafc-a45ce43fea09_large.jpg";
+  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop";
 
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
-  { identifier: "hindi", name: "Hindi" },
-  { identifier: "spanish", name: "Spanish" },
+  { identifier: "marathi", name: "मराठी" },
+  { identifier: "hindi", name: "हिंदी" },
 ];
 
 export const GITHUB_AI_TOKEN = process.env.REACT_APP_GITHUB_AI_TOKEN;

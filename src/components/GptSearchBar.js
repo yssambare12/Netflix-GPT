@@ -1,17 +1,24 @@
 import { useSelector } from "react-redux";
 import lang from "../utils/languageConstants";
 import { useRef } from "react";
-import useHandleGptSearch from "../hooks/useHandlegptSearch";
+import useHandleMedicineSearch from "../hooks/useHandleMedicineSearch";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchtext = useRef(null);
 
-  const handleGptSearch = useHandleGptSearch();
+  const handleMedicineSearch = useHandleMedicineSearch();
 
-  const handlegptsearch = async () => {
+  const handleSearch = async () => {
     const searchQuery = searchtext.current.value;
-    await handleGptSearch(searchQuery);
+    if (searchQuery.trim()) {
+      await handleMedicineSearch(searchQuery);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    searchtext.current.value = suggestion;
+    handleMedicineSearch(suggestion);
   };
 
   return (
@@ -20,11 +27,11 @@ const GptSearchBar = () => {
         {/* Header Section */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-2xl">
-            🤖 AI Movie Search
+            🐾 Pet Medicine Search
           </h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto drop-shadow-lg">
-            Discover your next favorite movie with our intelligent AI-powered
-            search
+            {lang[langKey]?.searchDescription ||
+              "Find the right medicine for your pet with AI-powered search"}
           </p>
         </div>
 
@@ -38,9 +45,12 @@ const GptSearchBar = () => {
                 ref={searchtext}
                 className="w-full px-6 py-4 bg-gray-800/50 border border-gray-600 rounded-xl sm:rounded-r-none
                          text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 
-                         focus:ring-red-500 focus:border-transparent transition-all duration-300
+                         focus:ring-green-500 focus:border-transparent transition-all duration-300
                          hover:bg-gray-700/50"
-                placeholder={lang[langKey].gptSearchPlaceholder}
+                placeholder={
+                  lang[langKey]?.gptSearchPlaceholder ||
+                  "Search for pet medicines..."
+                }
               />
               <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                 <svg
@@ -61,14 +71,14 @@ const GptSearchBar = () => {
 
             {/* Search Button */}
             <button
-              onClick={handlegptsearch}
-              className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 
+              onClick={handleSearch}
+              className="px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 
                        text-white font-semibold text-lg rounded-xl sm:rounded-l-none transition-all duration-300 
                        transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 
-                       focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black/60
+                       focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black/60
                        flex items-center justify-center gap-2 min-w-[140px]"
             >
-              <span>{lang[langKey].search}</span>
+              <span>{lang[langKey]?.search || "Search"}</span>
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -87,21 +97,22 @@ const GptSearchBar = () => {
 
           {/* Search Suggestions */}
           <div className="mt-4 flex flex-wrap gap-2 justify-center">
-            {[
-              "Action Movies",
-              "Romantic Comedies",
-              "Sci-Fi Thrillers",
-              "Marvel Movies",
-            ].map((suggestion) => (
+            {(
+              lang[langKey]?.searchSuggestions || [
+                "Dog Supplements",
+                "Pet Vitamins",
+                "Milk Increase Medicine",
+                "Joint Care",
+                "Skin Health",
+              ]
+            ).map((suggestion) => (
               <button
                 key={suggestion}
                 type="button"
-                onClick={() => {
-                  searchtext.current.value = suggestion;
-                }}
+                onClick={() => handleSuggestionClick(suggestion)}
                 className="px-4 py-2 bg-gray-800/50 hover:bg-gray-700/70 text-gray-300 hover:text-white 
                          text-sm rounded-full border border-gray-600/50 transition-all duration-200
-                         hover:border-red-500/50 hover:shadow-lg"
+                         hover:border-green-500/50 hover:shadow-lg"
               >
                 {suggestion}
               </button>
