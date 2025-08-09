@@ -6,6 +6,7 @@ import usePopularMovies from "../hooks/usePopularMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import GptSearch from "./GptSearch";
+import MovieTrailerOverlay from "./MovieTrailerOverlay";
 import { useSelector } from "react-redux";
 
 const Browse = () => {
@@ -27,6 +28,7 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
+      <MovieTrailerOverlay />
     </div>
   );
 };

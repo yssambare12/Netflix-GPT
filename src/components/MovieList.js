@@ -45,6 +45,7 @@ const MovieList = ({ title, movies }) => {
                 posterPaths={movie.poster_path}
                 movieId={movie.id}
                 movieTitle={movie.title || movie.original_title}
+                movieData={movie}
                 onClick={handleMovieClick}
               />
             </div>

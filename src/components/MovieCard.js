@@ -1,6 +1,16 @@
 import { ImageCDN } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { openMovieModal } from "../utils/movieModalSlice";
 
-const MovieCard = ({ posterPaths, movieId, movieTitle, onClick }) => {
+const MovieCard = ({
+  posterPaths,
+  movieId,
+  movieTitle,
+  onClick,
+  movieData,
+}) => {
+  const dispatch = useDispatch();
+
   if (!posterPaths) {
     return (
       <div className="w-32 sm:w-36 lg:w-48 xl:w-52 flex-shrink-0">
@@ -12,7 +22,18 @@ const MovieCard = ({ posterPaths, movieId, movieTitle, onClick }) => {
   }
 
   const handleClick = () => {
-    if (onClick && movieId) {
+    if (movieData) {
+      // Open trailer overlay with complete movie data
+      console.log("Opening modal with movie data:", movieData);
+      try {
+        dispatch(openMovieModal(movieData));
+        console.log("Action dispatched successfully");
+      } catch (error) {
+        console.error("Error dispatching action:", error);
+      }
+    } else if (onClick && movieId) {
+      // Fallback to original onClick behavior
+      console.log("Using fallback onClick with movieId:", movieId);
       onClick(movieId);
     }
   };
