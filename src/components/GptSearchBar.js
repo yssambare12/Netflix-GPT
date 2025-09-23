@@ -17,7 +17,6 @@ const GptSearchBar = () => {
   return (
     <div className="flex justify-center items-center px-4 mb-8">
       <div className="w-full max-w-4xl">
-        {/* Header Section */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-2xl">
             🤖 AI Movie Search
@@ -28,10 +27,8 @@ const GptSearchBar = () => {
           </p>
         </div>
 
-        {/* Search Form */}
         <form onSubmit={(e) => e.preventDefault()} className="relative">
           <div className="relative flex flex-col sm:flex-row gap-3 sm:gap-0 bg-black/60 backdrop-blur-sm rounded-2xl p-3 border border-gray-700/50 shadow-2xl">
-            {/* Search Input */}
             <div className="flex-1 relative">
               <input
                 type="text"
@@ -58,8 +55,6 @@ const GptSearchBar = () => {
                 </svg>
               </div>
             </div>
-
-            {/* Search Button */}
             <button
               onClick={handlegptsearch}
               className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 
@@ -84,8 +79,6 @@ const GptSearchBar = () => {
               </svg>
             </button>
           </div>
-
-          {/* Search Suggestions */}
           <div className="mt-4 flex flex-wrap gap-2 justify-center">
             {[
               "Action Movies",

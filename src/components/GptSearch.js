@@ -6,7 +6,6 @@ import MovieTrailerOverlay from "./MovieTrailerOverlay";
 const GptSearch = () => {
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Background Image with Enhanced Overlay */}
       <div className="fixed inset-0 z-0">
         <img
           src={BGImage}
@@ -17,7 +16,6 @@ const GptSearch = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70"></div>
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10 min-h-screen">
         <div className="pt-20 pb-8">
           <GptSearchBar />
@@ -25,7 +23,6 @@ const GptSearch = () => {
         </div>
       </div>
 
-      {/* Movie Trailer Overlay */}
       <MovieTrailerOverlay />
     </div>
   );

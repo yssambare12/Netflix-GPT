@@ -8,34 +8,50 @@ const useHandleGptSearch = () => {
   const searchMovieTmdb = useSearchMovieTmdb();
 
   const handlegptsearch = async (searchQuery) => {
-    const gptResult = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: "" },
-        {
-          role: "user",
-          content: `Act as a movie recommendation system. Suggest 5 movie names for the query: "${searchQuery}". Do not add any explanation—just list the 5 movie names only.`,
-        },
-      ],
-      model: "openai/gpt-4.1",
-    });
+    try {
+      const gptResult = await openai.chat.completions.create({
+        messages: [
+          { role: "system", content: "You are a helpful movie recommender." },
+          {
+            role: "user",
+            content: `Suggest 5 movie titles for: "${searchQuery}". Respond with only the 5 titles, one per line.`,
+          },
+        ],
+        // Use GitHub Models id if running via GitHub Models, else OpenAI model id
+        model: "gpt-4o-mini",
+      });
 
-    const rawText = gptResult.choices?.[0]?.message?.content;
+      const rawText = gptResult.choices?.[0]?.message?.content || "";
 
-    const gptMovieList = rawText
-      .split("\n")
-      .map((line) => line.replace(/^\d+\.\s*/, "").trim())
-      .filter((line) => line);
+      const gptMovieList = rawText
+        .split("\n")
+        .map((line) => line.replace(/^\d+\.\s*/, "").trim())
+        .filter((line) => line);
 
-    const promoseArray = gptMovieList.map((movie) => searchMovieTmdb(movie));
+      if (!gptMovieList.length) {
+        throw new Error("No titles returned by AI");
+      }
 
-    const tmdbResult = await Promise.all(promoseArray);
+      const promiseArray = gptMovieList.map((movie) => searchMovieTmdb(movie));
+      const tmdbResult = await Promise.all(promiseArray);
 
-    dispatch(
-      addGptMovieResult({
-        movieName: gptMovieList,
-        movieSearchResult: tmdbResult,
-      })
-    );
+      dispatch(
+        addGptMovieResult({
+          movieName: gptMovieList,
+          movieSearchResult: tmdbResult,
+        })
+      );
+    } catch (error) {
+      console.error("GPT search failed:", error);
+      dispatch(
+        addGptMovieResult({
+          movieName: [],
+          movieSearchResult: [],
+          error: error?.message || "Search failed. Check your API key.",
+        })
+      );
+      throw error; // rethrow so UI can optionally show a toast
+    }
   };
 
   return handlegptsearch;

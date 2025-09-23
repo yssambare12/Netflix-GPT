@@ -33,7 +33,6 @@ const VideoBackground = ({ movieId }) => {
         style={{ pointerEvents: "none" }}
       ></iframe>
 
-      {/* Mobile overlay - stronger on mobile for text readability */}
       <div className="absolute inset-0 bg-black/40 sm:bg-black/20"></div>
     </div>
   );
