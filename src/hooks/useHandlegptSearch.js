@@ -45,8 +45,8 @@ const useHandleGptSearch = () => {
       console.error("GPT search failed:", error);
       dispatch(
         addGptMovieResult({
-          movieName: [],
-          movieSearchResult: [],
+          movieName: null,
+          movieSearchResult: null,
           error: error?.message || "Search failed. Check your API key.",
         })
       );

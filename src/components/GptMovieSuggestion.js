@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
 import MovieList from "./MovieList";
+import fallbackHomeMovies from "../utils/fallbackHomeMovies";
 
 const GptMovieSuggestion = () => {
-  const { movieName, movieSearchResult } = useSelector((store) => store.gpt);
+  const { movieName, movieSearchResult, error } = useSelector(
+    (store) => store.gpt
+  );
 
   // Loading state
   if (!movieName && !movieSearchResult) {
@@ -43,16 +46,41 @@ const GptMovieSuggestion = () => {
 
   if (!movieSearchResult || !Array.isArray(movieSearchResult)) {
     return (
-      <div className="flex justify-center items-center py-16">
-        <div className="text-center max-w-md mx-auto px-4">
-          <div className="text-6xl mb-6">❌</div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            No Results Found
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 drop-shadow-lg">
+            {error ? "Showing Popular Picks" : "No Results Found"}
           </h2>
-          <p className="text-gray-400 text-lg">
-            We couldn't find any movies matching your search. Try different
-            keywords or genres.
+          <p className="text-gray-300 text-lg">
+            {error
+              ? "We couldn't reach AI right now. Here are popular movies from the homepage."
+              : "Try different keywords or genres."}
           </p>
+        </div>
+
+        <div className="space-y-8 lg:space-y-12">
+          {fallbackHomeMovies.map(({ title, movies }) => (
+            <div key={title} className="relative">
+              <div className="bg-gray-900/40 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gray-700/30 shadow-2xl">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white flex items-center gap-3">
+                    <span className="text-2xl">🎬</span>
+                    {title}
+                  </h3>
+                  <div className="bg-red-600/20 backdrop-blur-sm px-4 py-2 rounded-full border border-red-500/30">
+                    <span className="text-red-400 text-sm font-medium">
+                      {movies.length} movies
+                    </span>
+                  </div>
+                </div>
+
+                <MovieList title="" movies={movies} />
+              </div>
+
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500/30 rounded-full blur-sm"></div>
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-purple-500/20 rounded-full blur-sm"></div>
+            </div>
+          ))}
         </div>
       </div>
     );

@@ -18,10 +18,8 @@ const MovieTrailerOverlay = () => {
     }
   }, [isOpen, selectedMovie?.id, fetchMovieTrailer]);
 
-  // Cleanup effect to pause video when modal closes
   useEffect(() => {
     return () => {
-      // This runs when component unmounts or modal closes
       if (iframeRef.current) {
         pauseVideo();
       }
@@ -49,7 +47,6 @@ const MovieTrailerOverlay = () => {
   const pauseVideo = () => {
     if (iframeRef.current) {
       try {
-        // Try to pause the video using YouTube iframe API
         const iframe = iframeRef.current;
         if (iframe.contentWindow && iframe.contentWindow.postMessage) {
           iframe.contentWindow.postMessage(
@@ -57,14 +54,12 @@ const MovieTrailerOverlay = () => {
             "*"
           );
         }
-      } catch (error) {
-        // Video pause failed silently
-      }
+      } catch (error) {}
     }
   };
 
   const handleClose = () => {
-    pauseVideo(); // Pause video before closing
+    pauseVideo();
     dispatch(closeMovieModal());
   };
 
@@ -83,9 +78,7 @@ const MovieTrailerOverlay = () => {
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
       onClick={handleBackdropClick}
     >
-      {/* Modal Container */}
       <div className="relative w-full max-w-6xl mx-auto bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
-        {/* Close Button */}
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/70 hover:bg-black/90 
@@ -107,9 +100,7 @@ const MovieTrailerOverlay = () => {
           </svg>
         </button>
 
-        {/* Main Content */}
         <div className="flex flex-col lg:flex-row min-h-[500px] max-h-[90vh]">
-          {/* Video Section */}
           <div className="flex-1 bg-black relative">
             {isLoading ? (
               <div className="aspect-video flex items-center justify-center bg-gray-800">
@@ -120,7 +111,6 @@ const MovieTrailerOverlay = () => {
               </div>
             ) : selectedMovieTrailer?.key ? (
               <>
-                {/* Debug info - remove this later */}
                 <div className="absolute top-2 left-2 z-10 bg-black/70 text-white text-xs p-2 rounded">
                   Trailer Key: {selectedMovieTrailer.key}
                 </div>
@@ -136,7 +126,6 @@ const MovieTrailerOverlay = () => {
                   allowFullScreen
                   onError={() => {}}
                 />
-                {/* Fallback link in case iframe doesn't work */}
                 <div className="absolute bottom-2 left-2 z-10">
                   <a
                     href={`https://www.youtube.com/watch?v=${selectedMovieTrailer.key}`}
@@ -163,10 +152,8 @@ const MovieTrailerOverlay = () => {
             )}
           </div>
 
-          {/* Movie Info Section */}
           <div className="w-full lg:w-96 bg-gray-900 p-6 lg:p-8 overflow-y-auto">
             <div className="space-y-6">
-              {/* Movie Poster & Title */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
                   <img
@@ -202,7 +189,6 @@ const MovieTrailerOverlay = () => {
                 </div>
               </div>
 
-              {/* Overview */}
               <div>
                 <h3 className="text-lg font-semibold text-white mb-3">
                   Overview
@@ -213,7 +199,6 @@ const MovieTrailerOverlay = () => {
                 </p>
               </div>
 
-              {/* Additional Info */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-700">
                   <span className="text-gray-400">Release Date</span>
@@ -245,7 +230,6 @@ const MovieTrailerOverlay = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
                 <button className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200">
                   Add to Watchlist

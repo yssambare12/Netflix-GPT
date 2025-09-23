@@ -5,7 +5,7 @@ import gptReducers from "./gptSlice";
 import configReducer from "./configSlice";
 import movieModalReducer from "./movieModalSlice";
 
-const appStore = configureStore({
+export const appStore = configureStore({
   reducer: {
     user: userReducer,
     movies: moviesReducers,
