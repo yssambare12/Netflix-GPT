@@ -17,7 +17,6 @@ const useHandleGptSearch = () => {
             content: `Suggest 5 movie titles for: "${searchQuery}". Respond with only the 5 titles, one per line.`,
           },
         ],
-
         model: "gpt-4o-mini",
       });
 
