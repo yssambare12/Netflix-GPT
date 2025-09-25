@@ -24,12 +24,12 @@ const useMovieTrailerModal = () => {
 
         const data = await response.json();
 
-        // Filter for trailers, prefer official trailers
+
         const trailers = data.results.filter(
           (video) => video.type === "Trailer" && video.site === "YouTube"
         );
 
-        // Get the best trailer (official, then first available)
+
         const selectedTrailer =
           trailers.find((trailer) => trailer.official === true) ||
           trailers[0] ||

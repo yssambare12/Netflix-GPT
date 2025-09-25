@@ -7,7 +7,7 @@ const SecondaryContainer = () => {
   return (
     <section className="relative bg-black -mt-20 pt-20 pb-8 lg:pb-16">
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        
         <div className="mb-6 lg:mb-8">
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">
             Discover Movies
@@ -17,7 +17,7 @@ const SecondaryContainer = () => {
           </p>
         </div>
 
-        {/* Movie Lists */}
+        
         <div className="space-y-6 lg:space-y-8">
           <MovieList
             title="🔥 Now Playing"

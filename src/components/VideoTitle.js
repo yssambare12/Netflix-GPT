@@ -5,17 +5,17 @@ const VideoTitle = ({ title, overview }) => {
     <div className="absolute inset-0 z-10 flex items-end sm:items-center justify-start">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-16">
         <div className="max-w-xs sm:max-w-md lg:max-w-2xl xl:max-w-3xl">
-          {/* Movie Title */}
+          
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 sm:mb-4 lg:mb-6 leading-tight drop-shadow-2xl">
             {title}
           </h1>
 
-          {/* Movie Overview */}
+          
           <p className="hidden sm:block text-sm lg:text-base xl:text-lg text-gray-200 mb-4 sm:mb-6 lg:mb-8 leading-relaxed drop-shadow-lg max-w-sm lg:max-w-xl">
             {overview.length > 120 ? overview.slice(0, 120) + "..." : overview}
           </p>
 
-          {/* Action Buttons */}
+          
           <div className="flex flex-row gap-2 sm:gap-3 lg:gap-4">
             <button
               className="group flex items-center justify-center gap-1 sm:gap-2 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 

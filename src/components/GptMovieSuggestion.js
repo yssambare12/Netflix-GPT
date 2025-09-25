@@ -7,7 +7,7 @@ const GptMovieSuggestion = () => {
     (store) => store.gpt
   );
 
-  // Loading state
+
   if (!movieName && !movieSearchResult) {
     return (
       <div className="flex justify-center items-center py-16">
@@ -22,7 +22,7 @@ const GptMovieSuggestion = () => {
     );
   }
 
-  // No search performed yet
+
   if (!movieName) {
     return (
       <div className="flex justify-center items-center py-16">
@@ -88,7 +88,7 @@ const GptMovieSuggestion = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Results Header */}
+      
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 drop-shadow-lg">
           ✨ AI Recommendations
@@ -98,10 +98,10 @@ const GptMovieSuggestion = () => {
         </p>
       </div>
 
-      {/* Movie Categories */}
+      
       <div className="space-y-8 lg:space-y-12">
         {movieName.map((movie, index) => {
-          // Extract the movies from the TMDB API response
+
           const tmdbResponse = movieSearchResult[index];
           const movies = tmdbResponse?.results || [];
 
@@ -126,9 +126,9 @@ const GptMovieSuggestion = () => {
 
           return (
             <div key={movie} className="relative">
-              {/* Category Container */}
+              
               <div className="bg-gray-900/40 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gray-700/30 shadow-2xl">
-                {/* Category Header */}
+                
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl lg:text-3xl font-bold text-white flex items-center gap-3">
                     <span className="text-2xl">🎭</span>
@@ -141,11 +141,11 @@ const GptMovieSuggestion = () => {
                   </div>
                 </div>
 
-                {/* Movie List */}
+                
                 <MovieList title="" movies={movies} />
               </div>
 
-              {/* Decorative Elements */}
+              
               <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500/30 rounded-full blur-sm"></div>
               <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-purple-500/20 rounded-full blur-sm"></div>
             </div>
@@ -153,7 +153,7 @@ const GptMovieSuggestion = () => {
         })}
       </div>
 
-      {/* Footer Message */}
+      
       <div className="text-center mt-12 mb-8">
         <div className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/30">
           <p className="text-gray-300 text-lg">

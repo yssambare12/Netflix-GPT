@@ -28,14 +28,14 @@ const useMovieTrailer = (movieId) => {
         const data = await response.json();
         const results = Array.isArray(data?.results) ? data.results : [];
 
-        // Prefer YouTube trailers, pick official if available
+
         const youtubeTrailers = results.filter(
           (video) => video.site === "YouTube" && video.type === "Trailer"
         );
         const selectedTrailer =
           youtubeTrailers.find((v) => v.official === true) ||
           youtubeTrailers[0] ||
-          // fallback: any YouTube video (teaser/clip)
+
           results.find((v) => v.site === "YouTube") ||
           null;
 

@@ -22,33 +22,33 @@ const Login = () => {
   };
 
   const handlebuttonClick = () => {
-    // console.log(email.current.value);
-    // console.log(password.current.value);
+
+
 
     const massage = checkValidData(
       email.current.value,
       password.current.value
-      // nameValue
+
     );
     seterrorMassage(massage);
 
     if (massage) return;
     if (!isSigninform) {
-      //sign up login
+
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed up
+
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: "https://avatars.githubusercontent.com/u/91533131?v=4",
           })
             .then(() => {
-              // Profile updated!
+
             })
             .catch((error) => {
               seterrorMassage(error.massage);
@@ -60,14 +60,14 @@ const Login = () => {
           seterrorMassage(error + "-" + errorMassage);
         });
     } else {
-      // sign in logic
+
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed in
+
           const user = userCredential.user;
         })
         .catch((error) => {
@@ -80,12 +80,12 @@ const Login = () => {
 
   return (
     <div className="relative min-h-screen bg-black overflow-hidden">
-      {/* Header */}
+      
       <div className="relative z-30">
         <Header />
       </div>
 
-      {/* Background Image with Overlay */}
+      
       <div className="absolute inset-0 z-0">
         <img
           src={BGImage}
@@ -96,12 +96,12 @@ const Login = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
       </div>
 
-      {/* Main Content */}
+      
       <div className="relative z-20 flex items-center justify-center min-h-screen px-4 py-8">
         <div className="w-full max-w-md">
-          {/* Login Form Card */}
+          
           <div className="bg-black/90 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-800/50 overflow-hidden">
-            {/* Form Header */}
+            
             <div className="px-8 pt-8 pb-6">
               <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
                 {isSigninform ? "Welcome Back" : "Join Netflix"}
@@ -113,12 +113,12 @@ const Login = () => {
               </p>
             </div>
 
-            {/* Form Body */}
+            
             <form
               onSubmit={(e) => e.preventDefault()}
               className="px-8 pb-8 space-y-6"
             >
-              {/* Name Field (Sign Up Only) */}
+              
               {!isSigninform && (
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300 block">
@@ -136,7 +136,7 @@ const Login = () => {
                 </div>
               )}
 
-              {/* Email Field */}
+              
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-300 block">
                   Email Address
@@ -152,7 +152,7 @@ const Login = () => {
                 />
               </div>
 
-              {/* Password Field */}
+              
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-300 block">
                   Password
@@ -168,7 +168,7 @@ const Login = () => {
                 />
               </div>
 
-              {/* Error Message */}
+              
               {errorMassage && (
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                   <p className="text-red-400 text-sm font-medium">
@@ -177,7 +177,7 @@ const Login = () => {
                 </div>
               )}
 
-              {/* Submit Button */}
+              
               <button
                 onClick={handlebuttonClick}
                 className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 
@@ -188,7 +188,7 @@ const Login = () => {
                 {isSigninform ? "Sign In" : "Create Account"}
               </button>
 
-              {/* Divider */}
+              
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-700"></div>
@@ -198,7 +198,7 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Toggle Form */}
+              
               <div className="text-center">
                 <p className="text-gray-400 text-sm mb-2">
                   {isSigninform
@@ -215,7 +215,7 @@ const Login = () => {
                 </button>
               </div>
 
-              {/* Additional Links (Sign In Only) */}
+              
               {isSigninform && (
                 <div className="flex justify-between items-center text-sm">
                   <label className="flex items-center text-gray-400">
@@ -233,7 +233,7 @@ const Login = () => {
             </form>
           </div>
 
-          {/* Footer Text */}
+          
           <div className="text-center mt-8">
             <p className="text-gray-500 text-sm">
               This page is protected by Google reCAPTCHA to ensure you're not a

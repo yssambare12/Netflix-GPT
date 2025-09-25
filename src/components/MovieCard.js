@@ -23,14 +23,14 @@ const MovieCard = ({
 
   const handleClick = () => {
     if (movieData) {
-      // Open trailer overlay with complete movie data
+
       try {
         dispatch(openMovieModal(movieData));
       } catch (error) {
-        // Action dispatch failed silently
+
       }
     } else if (onClick && movieId) {
-      // Fallback to original onClick behavior
+
       onClick(movieId);
     }
   };
@@ -41,7 +41,7 @@ const MovieCard = ({
       onClick={handleClick}
     >
       <div className="relative overflow-hidden rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300">
-        {/* Movie Poster */}
+        
         <img
           src={ImageCDN + posterPaths}
           alt={movieTitle || "Movie Poster"}
@@ -49,7 +49,7 @@ const MovieCard = ({
           loading="lazy"
         />
 
-        {/* Hover Overlay */}
+        
         <div
           className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent 
                         opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -77,7 +77,7 @@ const MovieCard = ({
           </div>
         </div>
 
-        {/* Rating Badge (you can add this if you have rating data) */}
+        
         <div
           className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full
                         opacity-0 group-hover:opacity-100 transition-opacity duration-300"
