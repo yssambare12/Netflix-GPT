@@ -23,12 +23,9 @@ const useMovieTrailerModal = () => {
         }
 
         const data = await response.json();
-
-
         const trailers = data.results.filter(
           (video) => video.type === "Trailer" && video.site === "YouTube"
         );
-
 
         const selectedTrailer =
           trailers.find((trailer) => trailer.official === true) ||
