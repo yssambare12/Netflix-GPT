@@ -3,11 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
-
-
-
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyBSZWogJTsV6-BUqnODSATljYjUP4KVf3Y",
   authDomain: "netflixgpt-1d7f9.firebaseapp.com",
